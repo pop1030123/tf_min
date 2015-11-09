@@ -1,4 +1,22 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0].processResources.manifestFile
+        resourcePackageName 'com.pop.tf_min'
+    }
+}
 
 android {
     compileSdkVersion 22
@@ -22,4 +40,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.0.0'
+    apt "org.androidannotations:androidannotations:3.2"
+    compile 'org.androidannotations:androidannotations-api:3.2'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
 }

@@ -15,25 +15,26 @@ import java.util.List;
 /**
  * Created by pengfu on 15/11/7.
  */
-public class DataAdapter extends RecyclerView.Adapter<MyViewHolder> {
+public class RowAdapter extends RecyclerView.Adapter<MyRowHolder> {
 
 
     private Context mContext;
     private List<String> mListData = new ArrayList<String>();
 
-    public DataAdapter(Context context, List<String> datas) {
+    public RowAdapter(Context context, List<String> datas) {
         mContext = context;
         mListData = datas;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false));
+    public MyRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new MyRowHolder(LayoutInflater.from(mContext).inflate(R.layout.row_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.textView.setText(mListData.get(position));
+    public void onBindViewHolder(MyRowHolder holder, int position) {
+        String data = mListData.get(position);
+        holder.textView.setText(data);
     }
 
     @Override
@@ -42,12 +43,14 @@ public class DataAdapter extends RecyclerView.Adapter<MyViewHolder> {
     }
 }
 
-class MyViewHolder extends RecyclerView.ViewHolder {
+
+class MyRowHolder extends RecyclerView.ViewHolder {
 
     TextView textView;
 
-    public MyViewHolder(View itemView) {
+    public MyRowHolder(View itemView) {
         super(itemView);
         textView = (TextView) itemView.findViewById(R.id.id_num);
     }
 }
+

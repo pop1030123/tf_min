@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.pop.tf_min.DividerItemDecoration;
 import com.pop.tf_min.R;
+import com.pop.tf_min.entity.Note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +21,16 @@ public class ColAdapter extends RecyclerView.Adapter<MyColHolder> {
 
 
     private Context mContext;
-    private List<List<String>> mListData = new ArrayList<List<String>>();
+    private Note mListData = new Note();
 
-    public ColAdapter(Context context, List<List<String>> datas) {
+    private int mDepth = 0  ;
+
+    private Note mCurNote ;
+
+    public ColAdapter(Context context, Note datas) {
         mContext = context;
         mListData = datas;
+        mCurNote = datas ;
     }
 
     @Override
@@ -34,7 +40,7 @@ public class ColAdapter extends RecyclerView.Adapter<MyColHolder> {
 
     @Override
     public void onBindViewHolder(MyColHolder holder, int position) {
-        List<String> data = mListData.get(position);
+        List<Note> data = mCurNote.getChildren(mDepth ,position);
         RowAdapter adapter = new RowAdapter(mContext, data);
         holder.colView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         holder.colView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.HORIZONTAL_LIST));
@@ -43,7 +49,7 @@ public class ColAdapter extends RecyclerView.Adapter<MyColHolder> {
 
     @Override
     public int getItemCount() {
-        return mListData.size();
+        return mDepth + 1;
     }
 
 }

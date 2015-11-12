@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pop.tf_min.R;
+import com.pop.tf_min.entity.Note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +20,9 @@ public class RowAdapter extends RecyclerView.Adapter<MyRowHolder> {
 
 
     private Context mContext;
-    private List<String> mListData = new ArrayList<String>();
+    private List<Note> mListData = new ArrayList<>();
 
-    public RowAdapter(Context context, List<String> datas) {
+    public RowAdapter(Context context, List<Note> datas) {
         mContext = context;
         mListData = datas;
     }
@@ -33,8 +34,8 @@ public class RowAdapter extends RecyclerView.Adapter<MyRowHolder> {
 
     @Override
     public void onBindViewHolder(MyRowHolder holder, int position) {
-        String data = mListData.get(position);
-        holder.textView.setText(data);
+        Note data = mListData.get(position);
+        holder.textView.setText(data.getContent());
     }
 
     @Override

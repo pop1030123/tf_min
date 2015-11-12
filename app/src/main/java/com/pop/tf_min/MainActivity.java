@@ -6,14 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.pop.tf_min.adapter.ColAdapter;
+import com.pop.tf_min.entity.Note;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 @EActivity(R.layout.act_main)
 public class MainActivity extends Activity {
@@ -21,7 +18,7 @@ public class MainActivity extends Activity {
     @ViewById(R.id.list)
     RecyclerView mDataView;
 
-    private List<List<String>> mDatas;
+    private Note mDatas;
 
     private ColAdapter mAdapter;
 
@@ -34,14 +31,7 @@ public class MainActivity extends Activity {
     }
 
     private void initData() {
-        mDatas = new ArrayList<List<String>>();
-        for (int j = 0; j < 3; j++) {
-            List<String> childList = new ArrayList<>();
-            for (int i = 'A'; i < 'z'; i++) {
-                childList.add(j + "" + (char) i);
-            }
-            mDatas.add(childList);
-        }
+        mDatas = Note.getTestData()  ;
     }
 
     @AfterViews

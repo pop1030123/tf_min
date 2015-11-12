@@ -22,9 +22,12 @@ public class RowAdapter extends RecyclerView.Adapter<MyRowHolder> {
     private Context mContext;
     private List<Note> mListData = new ArrayList<>();
 
-    public RowAdapter(Context context, List<Note> datas) {
+    private OnItemClickListener mListener ;
+
+    public RowAdapter(Context context, List<Note> datas ,OnItemClickListener listener) {
         mContext = context;
         mListData = datas;
+        mListener = listener ;
     }
 
     @Override
@@ -33,9 +36,15 @@ public class RowAdapter extends RecyclerView.Adapter<MyRowHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MyRowHolder holder, int position) {
+    public void onBindViewHolder(final MyRowHolder holder, int position) {
         Note data = mListData.get(position);
         holder.textView.setText(data.getContent());
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClick(v, mListData.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
@@ -54,4 +63,6 @@ class MyRowHolder extends RecyclerView.ViewHolder {
         textView = (TextView) itemView.findViewById(R.id.id_num);
     }
 }
+
+
 

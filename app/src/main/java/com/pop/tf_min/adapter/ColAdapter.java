@@ -21,16 +21,30 @@ public class ColAdapter extends RecyclerView.Adapter<MyColHolder> {
 
 
     private Context mContext;
-    private Note mListData = new Note();
 
     private int mDepth = 0  ;
 
     private Note mCurNote ;
+    private OnItemClickListener mListener ;
 
-    public ColAdapter(Context context, Note datas) {
+    public ColAdapter(Context context, Note datas ,OnItemClickListener listener) {
         mContext = context;
-        mListData = datas;
-        mCurNote = datas ;
+        mCurNote = datas;
+        mListener = listener ;
+    }
+
+    public Note getCurNote(){
+        return mCurNote ;
+    }
+    public void setCurNote(Note note){
+        mCurNote = note ;
+        int tempDepth = 0 ;
+        Note tempNote = note.getParent() ;
+        while (tempNote!=null){
+            tempNote = tempNote.getParent() ;
+            tempDepth++ ;
+        }
+        mDepth = tempDepth ;
     }
 
     @Override
@@ -41,7 +55,7 @@ public class ColAdapter extends RecyclerView.Adapter<MyColHolder> {
     @Override
     public void onBindViewHolder(MyColHolder holder, int position) {
         List<Note> data = mCurNote.getChildren(mDepth ,position);
-        RowAdapter adapter = new RowAdapter(mContext, data);
+        RowAdapter adapter = new RowAdapter(mContext, data ,mListener);
         holder.colView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         holder.colView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.HORIZONTAL_LIST));
         holder.colView.setAdapter(adapter);

@@ -1,5 +1,7 @@
 package com.pop.tf_min.entity;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,8 @@ import java.util.List;
  * Created by pengfu on 15/11/10.
  */
 public class Note {
+
+    public static final String TAG = "Note:" ;
 
     private String content ;
     private Note parentNote ;
@@ -24,7 +28,10 @@ public class Note {
         this.parentNote = parent ;
     }
 
-    public void isRoot(boolean isRoot){
+    public boolean isRoot(){
+        return isRoot ;
+    }
+    public void setIsRoot(boolean isRoot){
         this.isRoot = isRoot ;
     }
     public void setContent(String content){
@@ -71,6 +78,7 @@ public class Note {
      * @return
      */
     public List<Note> getChildren(int depth ,int position){
+        Log.d(TAG ,"getChildren:depth:"+depth+":position:"+position) ;
         Note temp = this;
         for (int i=depth ;i > position ;i--){
             temp = temp.getParent() ;
@@ -80,11 +88,11 @@ public class Note {
 
     public static Note getTestData(){
         Note root = new Note("Root") ;
-        root.isRoot(true);
+        root.setIsRoot(true);
         for (int i = 0;i<5 ;i++) {
             Note child = new Note("项目" + i, root);
             for (int j = 0; j < 3; j++) {
-                Note child2 = new Note("子项目" + j, child);
+                Note child2 = new Note(i+"子项目" + j, child);
                 child.addChild(child2);
             }
             root.addChild(child);
